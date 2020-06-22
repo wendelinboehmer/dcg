@@ -1,6 +1,6 @@
 # Deep Coordination Graphs (B&ouml;hmer et al., 2020)  
   
-This GIT contains the implementations of the ICML 2020 paper "[Deep Coordination Graphs](https://arxiv.org/abs/1910.00091)" by Wendelin B&ouml;hmer, Vitaly Kurin and Shimon Whiteson.  The code is based on the python/pytorch framework [PyMARL](https://github.com/oxwhirl/pymarl) from the [Starcraft Multi-Agent Challenge](https://arxiv.org/abs/1902.04043).   For questions and comments please contact [Wendelin Boehmer](mailto:wendelinboehmer@gmail.com).  
+This GIT contains the implementations of the ICML 2020 paper "[Deep Coordination Graphs](https://arxiv.org/abs/1910.00091)" by Wendelin B&ouml;hmer, Vitaly Kurin and Shimon Whiteson.  The code is based on the python/pytorch framework [PyMARL](https://github.com/oxwhirl/pymarl) from the [Starcraft Multi-Agent Challenge](https://arxiv.org/abs/1902.04043).   For questions and comments please contact [Wendelin B&ouml;hmer](mailto:wendelinboehmer@gmail.com).  
   
   
 ## Installation instructions  
@@ -105,6 +105,7 @@ The `sacred` logs containing the results will be stored as `json` files in the `
 | LRQ (rank `$K`) | `lrq`    | `low_rank=$K`               | Low-rank joint Q-value |
 
 All DCG variants and CG can have the following topologies:
+
 | Topologies | `$ALG`                   | `$PARAMS`        |
 | ---------- | ------------------------ | ---------------- | 
 | DCG 	     | `dcg`/`dcg_noshare`/`cg` |                  |
@@ -114,6 +115,7 @@ All DCG variants and CG can have the following topologies:
 | VDN        | `dcg`/`dcg_noshare`/`cg` | `cg_edges=vdn`   |
 | `$N` rand. edges | `dcg`/`dcg_noshare`/`cg` | `cg_edges=$N`  |
 | given topology | `dcg`/`dcg_noshare`/`cg` | `cg_edges=$LIST` |
+
 `$LIST` must be a list of tuples of node indices (starting with 0), for example, `$LIST="[(0,1),(1,2),(2,3),(3,0)]"` for a cycle of 4 agents.
 
 
