@@ -1,4 +1,4 @@
-# ---- Defaults for 4 agents hunting 2 stag and 3 hare in a 10x10 environment
+# ---- Defines the Relative Overgeneralization experiment from Boehmer et al. (2020).
 
 env: "stag_hunt"            # a grid-world class that allows to hunt two different types of prey
 
