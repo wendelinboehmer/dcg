@@ -1,0 +1,6 @@
+# Exclude PyCharm configuration directory
+.idea/
+
+# Exclude the results that you may have produced in past experiments
+results/
+

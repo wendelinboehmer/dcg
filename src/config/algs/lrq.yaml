@@ -1,0 +1,26 @@
+# --- Low-rank Q-value Approximation specific parameters ---
+name: "lrq"
+
+# specify parameters specific to the low-rank approximation of the joint Q-values
+add_utilities: False              # Determines if VDN-style utilities are added to te low-rank approximation
+fully_observable: False           # Do factor functions condition on all observations (LRQ1 in Boehemr et al., 2020)?
+low_rank: 64                      # The rank K of the low-rank approximation
+max_iterations: 8                 # The maximal number of iteration during the coordinate-ascent maximization
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy" # Exploration method
+epsilon_start: 1.0                # Initial epsilon for exploration
+epsilon_finish: 0.05              # Final epsilon for exploration
+epsilon_anneal_time: 50000        # Number of time steps until exploration has finished
+
+# specify runner
+buffer_size: 500                  # Number of episodes in the experience replay buffer
+
+# specify trainer and MAC
+agent: "rnn_feat"                 # A RNN agent that returns its hidden state instead of its value
+agent_output_type: "q"            # The output format is Q-values
+mac: "low_rank_q"                 # The controller for LRQ
+double_q: True                    #
+learner: "dcg_learner"            # LRQ uses the DCG learner
+mixer:                            # No mixing network for DCG
+target_update_interval: 200       # Update the target network every {} episodes

@@ -1,0 +1,30 @@
+# --- Coordination Graph parameters ---
+name: "cg"
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0            # Initial epsilon for exploration
+epsilon_finish: 0.05          # Final epsilon for exploration
+epsilon_anneal_time: 50000    # Number of time steps until exploration has finished
+
+# specify runner
+buffer_size: 500              # Number of episodes in the experience replay buffer
+
+# Specify the CG
+cg_edges: 'full'    # Defines the CG: {'vdn', 'line', 'cycle', 'star', 'full', n_rand_edges:int, [[int,int], .., [int,int]]}
+cg_utilities_hidden_dim:      # Hidden layers of utility functions, by default None
+cg_payoffs_hidden_dim:        # Hidden layers of payoff functions, by default None
+cg_payoff_rank:               # If > 0, payoff matrices are decomposed with this rank, otherwise full rank
+duelling: False               # If True, runs DCG-V (adds a state-dependent bias function to the value)
+msg_anytime: True             # Anytime extension of greedy action selection (Kok and Vlassis, 2006)
+msg_iterations: 8             # Number of message passes in greedy action selection
+msg_normalized: True          # Message normalization during greedy action selection (Kok and Vlassis, 2006)
+
+# specify learner, controller and agent
+agent: "rnn_feat"             # A RNN agent that returns its hidden state instead of its value
+agent_output_type: "q"        # The output format is Q-values
+learner: "dcg_learner"        # The learner for DCG
+mac: "cg_mac"                 # The multi-agent controller for CG
+mixer:                        # No mixing network for DCG
+mixing_embed_dim: 32          # Hidden dimensions of the state dependent bias function of DCG-V
+target_update_interval: 200   # Update the target network every {} episodes
