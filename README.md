@@ -123,11 +123,11 @@ All DCG variants and CG can have the following topologies:
 
 | Experiment | `$ENV`        | `$PARAMS`                     | Task                        |
 | ---------- | ------------- | ----------------------------- | --------------------------- |
-| Fig. 2a    | `rel_overgen` | `miscapture_punishment=0`     | Relative overgeneralization |
-| Fig. 2b    | `rel_overgen` | `miscapture_punishment=-1`    | Relative overgeneralization |
-| Fig. 2c    | `rel_overgen` | `miscapture_punishment=-1.25` | Relative overgeneralization |
-| Fig. 2d    | `rel_overgen` | `miscapture_punishment=-1.5`  | Relative overgeneralization |
-| Fig. 3a-c  | `rel_overgen` | `miscapture_punishment=-2`    | Relative overgeneralization |
+| Fig. 2a    | `rel_overgen` | `env_args.miscapture_punishment=0`     | Relative overgeneralization |
+| Fig. 2b    | `rel_overgen` | `env_args.miscapture_punishment=-1`    | Relative overgeneralization |
+| Fig. 2c    | `rel_overgen` | `env_args.miscapture_punishment=-1.25` | Relative overgeneralization |
+| Fig. 2d    | `rel_overgen` | `env_args.miscapture_punishment=-1.5`  | Relative overgeneralization |
+| Fig. 3a-c  | `rel_overgen` | `env_args.miscapture_punishment=-2`    | Relative overgeneralization |
 | Fig. 4a-c  | `ghost_hunt`  |                               | Artificial decentralization |
 | Fig. 5, 8a | `sc2`         | `env_args.map_name=MMM2`      | StarCraft II                |
 | Fig. 8b    | `sc2`         | `env_args.map_name=so_many_baneling` | StarCraft II         |
