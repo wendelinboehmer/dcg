@@ -146,7 +146,7 @@ In BibTeX format:
 ```tex  
 @InProceedings{boehmer2020dcg,  
     title = {Deep Coordination Graphs}, 
-    author = {Wendelion B\"ohmer and Vitaly Kurin and Shimon Whiteson}, 
+    author = {Wendelin B\"ohmer and Vitaly Kurin and Shimon Whiteson}, 
     booktitle = {International Conference on Machine Learning}, 
     url = {https://arxiv.org/abs/1910.00091}, 
     year = {2020},
