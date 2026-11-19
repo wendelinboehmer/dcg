@@ -224,7 +224,7 @@ class DeepCoordinationGraphMAC(BasicMAC):
         """ Specifies edges for various topologies. """
         edges = []
         wrong_arg = "Parameter cg_edges must be either a string:{'vdn','line','cycle','star','full'}, " \
-                    "an int for the number of random edges (<= n_agents!), " \
+                    "an int for the number of random edges (<= n_agents * (n_agents - 1) / 2), " \
                     "or a list of either int-tuple or list-with-two-int-each for direct specification."
         # Parameter cg_edges must be either a string:{'vdn','line','cycle','star','full'}, ...
         if isinstance(arg, str):
@@ -241,9 +241,9 @@ class DeepCoordinationGraphMAC(BasicMAC):
                 edges = [e for l in edges for e in l]
             else:
                 assert False, wrong_arg
-        # ... an int for the number of random edges (<= (n_agents-1)!), ...
+        # ... an int for the number of random edges (<= n_agents * (n_agents - 1) / 2, the number of agent pairs), ...
         if isinstance(arg, int):
-            assert 0 <= arg <= factorial(self.n_agents - 1), wrong_arg
+            assert 0 <= arg <= self.n_agents * (self.n_agents - 1) // 2, wrong_arg
             for i in range(arg):
                 found = False
                 while not found:
