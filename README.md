@@ -22,6 +22,14 @@ Finally, copy the StarCraft II maps used in the [DCG paper](https://arxiv.org/ab
 ```shell 
 cp -f maps/* ./3rdparty/StarCraftII/Maps/Melee 
 ```
+
+### Installing with pip
+Instead of building the Docker image, the Python packages can be installed with pip (tested with Python 3.10, 3.11 and 3.12). Install [PyTorch](https://pytorch.org/get-started/locally/) for your CUDA version first, then run:
+```shell
+pip install -r requirements.txt
+```
+If StarCraft II is not installed in `3rdparty/StarCraftII`, set `SC2PATH` to its location.
+
 ### Using an existing PyMARL copy
 Both algorithms and environments can be used with existing versions of  [PyMARL](https://github.com/oxwhirl/pymarl)  as well. 
 
