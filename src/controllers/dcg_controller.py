@@ -194,7 +194,7 @@ class DeepCoordinationGraphMAC(BasicMAC):
         th.save(self.utility_fun.state_dict(), "{}/utilities.th".format(path))
         th.save(self.payoff_fun.state_dict(), "{}/payoffs.th".format(path))
         if self.duelling:
-            th.save(self.state_value, "{}/state_value.th".format(path))
+            th.save(self.state_value.state_dict(), "{}/state_value.th".format(path))
 
     def load_models(self, path):
         """ Loads parameters from the disc. """
@@ -202,7 +202,11 @@ class DeepCoordinationGraphMAC(BasicMAC):
         self.utility_fun.load_state_dict(th.load("{}/utilities.th".format(path), map_location=lambda storage, loc: storage))
         self.payoff_fun.load_state_dict(th.load("{}/payoffs.th".format(path), map_location=lambda storage, loc: storage))
         if self.duelling:
-            self.payoff_fun.load_state_dict(th.load("{}/state_value.th".format(path), map_location=lambda storage, loc: storage))
+            state_value = th.load("{}/state_value.th".format(path), map_location=lambda storage, loc: storage)
+            # Older checkpoints contain the whole state_value module instead of its state_dict
+            if isinstance(state_value, nn.Module):
+                state_value = state_value.state_dict()
+            self.state_value.load_state_dict(state_value)
 
     # ================== Private methods to help the constructor ======================================================
 
