@@ -46,9 +46,6 @@ RUN git clone https://github.com/oxwhirl/sacred.git /install/sacred && cd /insta
 RUN pip3 install torch
 RUN pip3 install torchvision snakeviz pytest probscale
 
-### -- This library must be added for DCG, one may need to adapt it to newer torch versions
-RUN pip3 install torch_scatter==latest+cu102 -f https://pytorch-geometric.com/whl/torch-1.5.0.html
-
 ### -- SMAC
 RUN pip3 install git+https://github.com/oxwhirl/smac.git
 ENV SC2PATH /pymarl/3rdparty/StarCraftII

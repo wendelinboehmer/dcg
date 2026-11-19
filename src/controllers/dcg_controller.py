@@ -4,7 +4,6 @@ import torch.nn as nn
 import numpy as np
 import contextlib
 import itertools
-import torch_scatter
 from math import factorial
 from random import randrange
 
@@ -118,8 +117,10 @@ class DeepCoordinationGraphMAC(BasicMAC):
                 if self.normalized:
                     messages -= messages.mean(dim=-1, keepdim=True)
                 # Create the current utilities of all agents, based on the messages
-                msg = torch_scatter.scatter_add(src=messages[0], index=self.edges_to, dim=1, dim_size=self.n_agents)
-                msg += torch_scatter.scatter_add(src=messages[1], index=self.edges_from, dim=1, dim_size=self.n_agents)
+                msg = f_i.new_zeros(f_i.shape).scatter_add_(
+                    dim=1, index=self.edges_to.view(1, -1, 1).expand_as(messages[0]), src=messages[0])
+                msg += f_i.new_zeros(f_i.shape).scatter_add_(
+                    dim=1, index=self.edges_from.view(1, -1, 1).expand_as(messages[1]), src=messages[1])
                 utils = f_i + msg
                 # Anytime extension (Kok and Vlassis, 2006)
                 if self.anytime:
@@ -265,8 +266,6 @@ class DeepCoordinationGraphMAC(BasicMAC):
         for i, edge in enumerate(edge_list):
             self.edges_from[i] = edge[0]
             self.edges_to[i] = edge[1]
-        self.edges_n_in = torch_scatter.scatter_add(src=self.edges_to.new_ones(len(self.edges_to)),
-                                                    index=self.edges_to, dim=0, dim_size=self.n_agents) \
-                          + torch_scatter.scatter_add(src=self.edges_to.new_ones(len(self.edges_to)),
-                                                      index=self.edges_from, dim=0, dim_size=self.n_agents)
-        self.edges_n_in = self.edges_n_in.float()
+        ones = th.ones(len(edge_list))
+        self.edges_n_in = th.zeros(self.n_agents).scatter_add_(dim=0, index=self.edges_to, src=ones) \
+                          + th.zeros(self.n_agents).scatter_add_(dim=0, index=self.edges_from, src=ones)

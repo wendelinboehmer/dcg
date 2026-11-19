@@ -25,8 +25,6 @@ cp -f maps/* ./3rdparty/StarCraftII/Maps/Melee
 ### Using an existing PyMARL copy
 Both algorithms and environments can be used with existing versions of  [PyMARL](https://github.com/oxwhirl/pymarl)  as well. 
 
-The __Dockerfile__ must install the [`torch_scatter`](https://github.com/rusty1s/pytorch_scatter) library, which can lead to conflicts with the installed `torch` version and the Ubuntu version of the base image. See `docker/Dockerfile`.
-
 The __environments__ can be imported by copying: 
 ```
 src/config/envs/rel_overgen.yaml
