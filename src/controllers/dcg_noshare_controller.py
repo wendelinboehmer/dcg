@@ -68,7 +68,7 @@ class DCGnoshareMAC (DeepCoordinationGraphMAC):
             # Without decomposition, the payoff_fun output must only be reshaped
             output = output.view(*output.shape[:-1], n, n)
         # The output of the backward messages must be transposed
-        output[1] = output[1].transpose(dim0=-2, dim1=-1)
+        output[1] = output[1].transpose(dim0=-2, dim1=-1).clone()
         # Compute the symmetric average of each edge with it's flipped counterpart
         return output.mean(dim=0)
 
@@ -116,3 +116,27 @@ class DCGnoshareMAC (DeepCoordinationGraphMAC):
     def init_hidden(self, batch_size):
         """ Overloads method to make sure the hidden states of all agents are intialized. """
         self.hidden_states = [ag.init_hidden().expand(batch_size, -1) for ag in self.agent]  # bv
+
+    def save_models(self, path):
+        """ Overloads method to save the parameters of all encoders, utilities and payoffs. """
+        for i, ag in enumerate(self.agent):
+            th.save(ag.state_dict(), "{}/agent_{}.th".format(path, i))
+        for i, f in enumerate(self.utility_fun):
+            th.save(f.state_dict(), "{}/utilities_{}.th".format(path, i))
+        for i, f in enumerate(self.payoff_fun):
+            th.save(f.state_dict(), "{}/payoffs_{}.th".format(path, i))
+        if self.duelling:
+            th.save(self.state_value.state_dict(), "{}/state_value.th".format(path))
+
+    def load_models(self, path):
+        """ Overloads method to load the parameters of all encoders, utilities and payoffs. """
+        def load(name):
+            return th.load("{}/{}.th".format(path, name), map_location=lambda storage, loc: storage)
+        for i, ag in enumerate(self.agent):
+            ag.load_state_dict(load("agent_{}".format(i)))
+        for i, f in enumerate(self.utility_fun):
+            f.load_state_dict(load("utilities_{}".format(i)))
+        for i, f in enumerate(self.payoff_fun):
+            f.load_state_dict(load("payoffs_{}".format(i)))
+        if self.duelling:
+            self.state_value.load_state_dict(load("state_value"))
